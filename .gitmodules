@@ -1,3 +1,9 @@
 [submodule "samithiwat-backend-user"]
 	path = samithiwat-backend-user
 	url = https://github.com/samithiwat/samithiwat-backend-user
+[submodule "samithiwat-backend-organization"]
+	path = samithiwat-backend-organization
+	url = https://github.com/samithiwat/samithiwat-backend-organization.git
+[submodule "samithiwat-backend-role"]
+	path = samithiwat-backend-role
+	url = https://github.com/samithiwat/samithiwat-backend-role.git
