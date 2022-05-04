@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package role;
+
+import "dto.proto";
+import "common.proto";
+
+option go_package = "github.com/samithiwat/samithiwat-backend-user/src/proto";
+
+service RoleService {
+  rpc FindAll(FindAllRoleRequest) returns (RoleListResponse){}
+  rpc FindOne(FindOneRoleRequest) returns (RoleResponse){}
+  rpc Create(CreateRoleRequest) returns (RoleResponse){}
+  rpc Update(UpdateRoleRequest) returns (RoleResponse){}
+  rpc Delete(DeleteRoleRequest) returns (RoleResponse){}
+}
+
+message RoleResponse {
+  int32 StatusCode = 1;
+  repeated string errors = 2;
+  dto.Role data = 3;
+}
+
+message RolePagination{
+  repeated dto.Role items = 1;
+  common.PaginationMetadata meta = 2;
+}
+
+message RoleListResponse{
+  int32 StatusCode = 1;
+  repeated string errors = 2;
+  RolePagination data = 3;
+}
+
+// FindAll
+
+message FindAllRoleRequest{
+  int64 limit = 1;
+  int64 page = 2;
+}
+
+// FindOne
+
+message FindOneRoleRequest{
+  int32 id = 1;
+}
+
+// Create
+
+message CreateRoleRequest{
+  dto.Role role = 1;
+}
+
+// Update
+
+message UpdateRoleRequest{
+  dto.Role role = 1;
+}
+
+// Delete
+
+message DeleteRoleRequest{
+  int32 id = 1;
+}
