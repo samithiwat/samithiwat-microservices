@@ -1,0 +1,3 @@
+[submodule "samithiwat-backend-user"]
+	path = samithiwat-backend-user
+	url = https://github.com/samithiwat/samithiwat-backend-user
