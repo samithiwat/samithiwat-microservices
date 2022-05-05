@@ -7,3 +7,6 @@
 [submodule "samithiwat-backend-role"]
 	path = samithiwat-backend-role
 	url = https://github.com/samithiwat/samithiwat-backend-role.git
+[submodule "samithiwat-auth-backend"]
+	path = samithiwat-auth-backend
+	url = https://github.com/samithiwat/samithiwat-auth-backend.git
