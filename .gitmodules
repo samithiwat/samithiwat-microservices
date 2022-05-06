@@ -10,3 +10,6 @@
 [submodule "samithiwat-auth-backend"]
 	path = samithiwat-auth-backend
 	url = https://github.com/samithiwat/samithiwat-auth-backend.git
+[submodule "samithiwat-backend-general"]
+	path = samithiwat-backend-general
+	url = https://github.com/samithiwat/samithiwat-backend-general.git
