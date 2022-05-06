@@ -13,7 +13,7 @@ enum LogType{
 }
 
 message User{
-  int32 id = 1;
+  uint32 id = 1;
   string firstname = 2;
   string lastname = 3;
   string imageUrl = 5;
