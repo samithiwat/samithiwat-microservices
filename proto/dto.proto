@@ -20,7 +20,8 @@ message User{
   Location address = 6;
   Contact contact = 7;
   repeated Organization organizations = 8;
-  repeated Log logs = 9;
+  repeated Team teams = 9;
+  repeated Log logs = 10;
 }
 
 message Location{
@@ -47,8 +48,9 @@ message Organization{
   Location location = 4;
   Contact  contact = 5;
   repeated User members = 6;
-  repeated Role roles = 7;
-  repeated Log logs = 8;
+  repeated Team teams = 7;
+  repeated Role roles = 8;
+  repeated Log logs = 9;
 }
 
 message Team {
@@ -57,7 +59,8 @@ message Team {
   string description = 3;
   repeated User members = 4;
   repeated Team subTeams = 5;
-  repeated Log logs = 6;
+  Organization organization = 6;
+  repeated Log logs = 7;
 }
 
 message Log{

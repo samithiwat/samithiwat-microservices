@@ -8,7 +8,7 @@ import "common.proto";
 option go_package = "github.com/samithiwat/samithiwat-backend-user/src/proto";
 
 service UserService {
-  rpc FindAll(FindAllUserRequest) returns (UserListResponse){}
+  rpc FindAll(FindAllUserRequest) returns (UserPaginationResponse){}
   rpc FindOne(FindOneUserRequest) returns (UserResponse){}
   rpc FindMulti(FindMultiUserRequest) returns (UserListResponse){}
   rpc Create(CreateUserRequest) returns (UserResponse){}
