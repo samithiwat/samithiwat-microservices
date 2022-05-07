@@ -13,3 +13,6 @@
 [submodule "samithiwat-backend-general"]
 	path = samithiwat-backend-general
 	url = https://github.com/samithiwat/samithiwat-backend-general.git
+[submodule "samithiwat-backend-gateway"]
+	path = samithiwat-backend-gateway
+	url = https://github.com/samithiwat/samithiwat-backend-gateway.git
