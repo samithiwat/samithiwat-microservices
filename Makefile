@@ -4,6 +4,7 @@ pull-all:
 	docker pull ghcr.io/samithiwat/samithiwat-backend-role:dev
 	docker pull ghcr.io/samithiwat/samithiwat-backend-organization:dev
 	docker pull ghcr.io/samithiwat/samithiwat-backend-general:dev
+	docker pull ghcr.io/samithiwat/samithiwat-backend-auth:dev
 	docker image prune -f
 
 compose-up:
