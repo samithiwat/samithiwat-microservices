@@ -9,7 +9,7 @@
 	url = https://github.com/samithiwat/samithiwat-backend-role.git
 [submodule "samithiwat-auth-backend"]
 	path = samithiwat-auth-backend
-	url = https://github.com/samithiwat/samithiwat-auth-backend.git
+	url = https://github.com/samithiwat/samithiwat-backend-auth.git
 [submodule "samithiwat-backend-general"]
 	path = samithiwat-backend-general
 	url = https://github.com/samithiwat/samithiwat-backend-general.git
