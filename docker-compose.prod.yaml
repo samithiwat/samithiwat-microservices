@@ -1,139 +1,55 @@
-version: '3.9'
+version: "3.9"
 
 services:
-  db:
-    image: mysql:8.0.28-oracle
-    container_name: db
-    restart: unless-stopped
-    env_file:
-      - .env.prod
-    networks:
-      - samithiwat
-    volumes:
-      - ./volumes/database/mysql:/var/lib/mysql
-    ports:
-      - ${DATABASE_PORT}:3306
-
-  cache:
-    image: bitnami/redis:6.2.6
-    container_name: cache
-    restart: unless-stopped
-    env_file:
-      - .env.prod
-    networks:
-      - samithiwat
-    ports:
-      - ${REDIS_PORT}:6379
-
   api-gateway:
     image: ghcr.io/samithiwat/samithiwat-backend-gateway:master
     container_name: api-gateway
     restart: unless-stopped
     networks:
-      - samithiwat
+      - samithiwat-prod
     depends_on:
-      - user-service
-      - organization-service
+      - samithiwat-prod-service
+      - auth-service
     volumes:
-      - ./volumes/service/gateway/config:/app/config
+      - ./service/prod/gateway/config:/app/config
     ports:
       - ${GATEWAY_PORT}:3000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.main-backend.rule=Host(`api.samithiwat.dev`)"
-      - "traefik.http.routers.main-backend.entrypoints=web"
+      - "traefik.http.routers.api-gateway.rule=Host(`api.samithiwat.dev`)"
+      - "traefik.http.routers.api-gateway.entrypoints=web"
       - "traefik.docker.network=traefik-net"
 
-  user-service:
-    image: ghcr.io/samithiwat/samithiwat-backend-user:master
-    container_name: user-service
+  auth-service:
+    image: ghcr.io/samithiwat/samithiwat-backend-auth:master
+    container_name: auth-service
+    restart: unless-stopped
+    env_file:
+      - .env.dev
+    networks:
+      - samithiwat-prod
+      - database
+    ports:
+      - ${AUTH_SERVICE_PORT}:3001
+
+  samithiwat-service:
+    image: ghcr.io/samithiwat/samithiwat-backend:master
+    container_name: samithiwat-service
     restart: unless-stopped
     networks:
-      - samithiwat
-    depends_on:
-      - db
-      - cache
-    links:
-      - db
-      - cache
+      - samithiwat-prod
+      - database
     volumes:
-      - ./volumes/service/user/config:/app/config
+      - ./service/prod/samithiwat/config:/app/config
     ports:
-      - ${USER_SERVICE_PORT}:3002
-
-  role-service:
-    image: ghcr.io/samithiwat/samithiwat-backend-role:master
-    container_name: role-service
-    restart: unless-stopped
-    networks:
-      - samithiwat
-    depends_on:
-      - db
-      - cache
-    links:
-      - db
-      - cache
-    volumes:
-      - ./volumes/service/role/config:/app/config
-    ports:
-      - ${ROLE_SERVICE_PORT}:3003
-
-  organization-service:
-    image: ghcr.io/samithiwat/samithiwat-backend-organization:master
-    container_name: organization-service
-    restart: unless-stopped
-    networks:
-      - samithiwat
-    depends_on:
-      - db
-      - cache
-    links:
-      - db
-      - cache
-    volumes:
-      - ./volumes/service/organization/config:/app/config
-    ports:
-      - ${ORGANIZATION_SERVICE_PORT}:3004
-
-  general-service:
-    image: ghcr.io/samithiwat/samithiwat-backend-general:master
-    container_name: general-service
-    restart: unless-stopped
-    networks:
-      - samithiwat
-    depends_on:
-      - db
-      - cache
-    links:
-      - db
-      - cache
-    volumes:
-      - ./volumes/service/general/config:/app/config
-    ports:
-      - ${GENERAL_SERVICE_PORT}:3005
-
-  reverse-proxy:
-    # The official v2 Traefik docker image
-    image: traefik:2.6.1
-    # Enables the web UI and tells Traefik to listen to docker
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-    ports:
-      # The HTTP port
-      - "80:80"
-      # The Web UI (enabled by --api.insecure=true)
-      - "8080:8080"
-    networks:
-      - traefik-net
-    volumes:
-      # So that Traefik can listen to the Docker events
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ${SAMITHIWAT_SERVICE_PORT}:3002
 
 networks:
-  samithiwat:
-    name: samithiwat
+  samithiwat-prod:
+    name: samithiwat-prod
+  database:
+    name: database
+    external: true
   traefik-net:
     name: traefik-net
+    external: true

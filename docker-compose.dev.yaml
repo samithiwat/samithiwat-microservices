@@ -3,50 +3,50 @@ version: "3.9"
 services:
   api-gateway:
     image: ghcr.io/samithiwat/samithiwat-backend-gateway:dev
-    container_name: api-gateway-local
+    container_name: api-gateway-dev
     restart: unless-stopped
     networks:
-      - samithiwat
+      - samithiwat-dev
     depends_on:
-      - samithiwat-service
+      - samithiwat-dev-service
       - auth-service
     volumes:
-      - ./volumes/local/service/gateway/config:/app/config
+      - ./service/dev/gateway/config:/app/config
     ports:
       - ${GATEWAY_PORT}:3000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api-gateway.rule=Host(`localhost`)"
+      - "traefik.http.routers.api-gateway.rule=Host(`pdev.samithiwat.dev`)"
       - "traefik.http.routers.api-gateway.entrypoints=web"
       - "traefik.docker.network=traefik-net"
 
   auth-service:
     image: ghcr.io/samithiwat/samithiwat-backend-auth:dev
-    container_name: auth-service-local
+    container_name: auth-service-dev
     restart: unless-stopped
     env_file:
       - .env.dev
     networks:
-      - samithiwat
+      - samithiwat-dev
       - database
     ports:
       - ${AUTH_SERVICE_PORT}:3001
 
   samithiwat-service:
     image: ghcr.io/samithiwat/samithiwat-backend:dev
-    container_name: samithiwat-service-local
+    container_name: samithiwat-service-dev
     restart: unless-stopped
     networks:
-      - samithiwat
+      - samithiwat-dev
       - database
     volumes:
-      - ./volumes/local/service/samithiwat/config:/app/config
+      - ./service/dev/samithiwat/config:/app/config
     ports:
       - ${SAMITHIWAT_SERVICE_PORT}:3002
 
 networks:
-  samithiwat:
-    name: samithiwat
+  samithiwat-dev:
+    name: samithiwat-dev
   database:
     name: database
     external: true
