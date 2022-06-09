@@ -25,7 +25,7 @@ services:
     container_name: auth-service
     restart: unless-stopped
     env_file:
-      - .env.dev
+      - .env.prod
     networks:
       - samithiwat-prod
       - database
