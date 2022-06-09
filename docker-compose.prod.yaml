@@ -8,7 +8,7 @@ services:
     networks:
       - samithiwat-prod
     depends_on:
-      - samithiwat-prod-service
+      - samithiwat-service
       - auth-service
     volumes:
       - ./service/prod/gateway/config:/app/config
