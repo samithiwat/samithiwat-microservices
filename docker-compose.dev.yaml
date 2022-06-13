@@ -17,7 +17,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api-gateway-dev.rule=Host(`pdev.samithiwat.dev`)"
-      - "traefik.http.services.backend-dev.loadbalancer.server.port=4000"
+      - "traefik.http.services.api-gateway-dev.loadbalancer.server.port=4000"
       - "traefik.http.routers.api-gateway-dev.entrypoints=web"
       - "traefik.docker.network=traefik-net"
 
