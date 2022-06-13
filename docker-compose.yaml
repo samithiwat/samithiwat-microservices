@@ -1,17 +1,17 @@
 version: "3.9"
 
 services:
-  api-gateway:
+  api-gateway-local:
     image: ghcr.io/samithiwat/samithiwat-backend-gateway:dev
     container_name: api-gateway-local
     restart: unless-stopped
     networks:
-      - samithiwat
+      - samithiwat-local
     depends_on:
-      - samithiwat-service
-      - auth-service
+      - samithiwat-service-local
+      - auth-service-local
     volumes:
-      - ./volumes/local/service/gateway/config:/app/config
+      - ./service/local/gateway/config:/app/config
     ports:
       - ${GATEWAY_PORT}:3000
     labels:
@@ -20,33 +20,49 @@ services:
       - "traefik.http.routers.api-gateway.entrypoints=web"
       - "traefik.docker.network=traefik-net"
 
-  auth-service:
+  auth-service-local:
     image: ghcr.io/samithiwat/samithiwat-backend-auth:dev
     container_name: auth-service-local
     restart: unless-stopped
     env_file:
-      - .env.dev
+      - .env.local
     networks:
-      - samithiwat
+      - samithiwat-local
       - database
     ports:
       - ${AUTH_SERVICE_PORT}:3001
 
-  samithiwat-service:
+  samithiwat-service-local:
     image: ghcr.io/samithiwat/samithiwat-backend:dev
     container_name: samithiwat-service-local
     restart: unless-stopped
+    depends_on:
+      - auth-service-local
     networks:
-      - samithiwat
+      - samithiwat-local
       - database
     volumes:
-      - ./volumes/local/service/samithiwat/config:/app/config
+      - ./service/local/samithiwat/config:/app/config
     ports:
       - ${SAMITHIWAT_SERVICE_PORT}:3002
 
+  samithiwat-blog-service-local:
+    image: ghcr.io/samithiwat/samithiwat-backend-blog:dev
+    container_name: samithiwat-service-blog-local
+    restart: unless-stopped
+    depends_on:
+      - samithiwat-service-local
+    networks:
+      - samithiwat-local
+      - database
+    env_file:
+      - .env.local
+    ports:
+      - ${SAMITHIWAT_BLOG_SERVICE_PORT}:3008
+
 networks:
-  samithiwat:
-    name: samithiwat
+  samithiwat-local:
+    name: samithiwat-local
   database:
     name: database
     external: true

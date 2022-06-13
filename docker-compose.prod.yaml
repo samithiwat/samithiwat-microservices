@@ -45,6 +45,20 @@ services:
     ports:
       - ${SAMITHIWAT_SERVICE_PORT}:3002
 
+  samithiwat-blog-service:
+    image: ghcr.io/samithiwat/samithiwat-backend-blog:master
+    container_name: samithiwat-service-blog
+    restart: unless-stopped
+    depends_on:
+      - samithiwat-service
+    networks:
+      - samithiwat-prod
+      - database
+    env_file:
+      - .env.prod
+    ports:
+      - ${SAMITHIWAT_BLOG_SERVICE_PORT}:3008
+
 networks:
   samithiwat-prod:
     name: samithiwat-prod

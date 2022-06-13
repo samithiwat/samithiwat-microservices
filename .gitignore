@@ -41,6 +41,7 @@ volumes
 .env
 .env.dev
 .env.prod
+.env.local
 
 # Config
 config.yaml
