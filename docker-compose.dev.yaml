@@ -16,8 +16,8 @@ services:
       - ${GATEWAY_PORT}:3000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api-gateway.rule=Host(`pdev.samithiwat.dev`)"
-      - "traefik.http.routers.api-gateway.entrypoints=web"
+      - "traefik.http.routers.api-gateway-dev.rule=Host(`pdev.samithiwat.dev`)"
+      - "traefik.http.routers.api-gateway-dev.entrypoints=web"
       - "traefik.docker.network=traefik-net"
 
   auth-service-dev:
