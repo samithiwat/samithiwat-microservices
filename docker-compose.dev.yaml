@@ -8,8 +8,8 @@ services:
     networks:
       - samithiwat-dev
     depends_on:
-      - samithiwat-dev-service
-      - auth-service
+      - samithiwat-service-dev
+      - auth-service-dev
     volumes:
       - ./service/dev/gateway/config:/app/config
     ports:
